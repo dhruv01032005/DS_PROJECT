@@ -11,7 +11,7 @@ module controller(
 );
     
     // MAKING THE STATES FOR FSM
-    reg [3:0] state; 
+    reg [3:0] state;
     localparam INPUT = 4'b0001, OUTPUT_LAYER_1 = 4'b0010, OUTPUT_LAYER_2 = 4'b0100, FINAL_OUTPUT = 4'b1000;
     
     // General counters
@@ -39,34 +39,35 @@ module controller(
     wire [63:0] bias_layer1_8; // 1*8 bytes = 1*8*8 bits
     wire [5119:0] weight_layer2; // 64*10 bytes = 64*10*8 bits
     wire [79:0] bias_layer2; // 1*10 bytes = 1*10*8 bits
-    wire start_1 = 1'b1;
-    wire start_2 = 1'b0;
-    wire start_3 = 1'b0;
-    wire start_4 = 1'b0;
-    wire start_5 = 1'b0;
-    wire start_6 = 1'b0;
-    wire start_7 = 1'b0;
-    wire start_8 = 1'b0;
-    wire start_9 = 1'b0;
-    wire start_10 = 1'b0;
-    wire start_11 = 1'b0;
-    wire start_12 = 1'b0;
-    wire start_13 = 1'b0;
-    wire start_14 = 1'b0;
-    wire start_15 = 1'b0;
-    wire start_16 = 1'b0;
-    wire start_17 = 1'b0;
-    wire start_18 = 1'b0;
-    wire start_19 = 1'b0;
-    wire start_20 = 1'b0;
-    wire start_21 = 1'b0;
-    wire start_22 = 1'b0;
-    wire start_23 = 1'b0;
-    wire start_24 = 1'b0;
-    wire start_25 = 1'b0;
-    wire start_26 = 1'b0;
-    wire start_27 = 1'b0;
-    wire start_28 = 1'b0;
+    reg start_1 = 1'b0;
+    wire start_2;
+    wire start_3;
+    wire start_4;
+    wire start_5;
+    wire start_6;
+    wire start_7;
+    wire start_8;
+    wire start_9;
+    wire start_10;
+    wire start_11;
+    wire start_12;
+    wire start_13;
+    wire start_14;
+    wire start_15;
+    wire start_16;
+    wire start_17;
+    wire start_18;
+    wire start_19;
+    wire start_20;
+    wire start_21;
+    wire start_22;
+    wire start_23;
+    wire start_24;
+    wire start_25;
+    reg start_26 = 1'b0;
+    wire start_27;
+    wire start_28;
+    wire start_29;
     
     // Data storage of outputs after applying the FCL layer
     wire [63:0] output_layer1_1;
@@ -327,26 +328,26 @@ module controller(
     
     weight_loader_layer2 w9(
         .clk(clk_100MHz), 
-        .start(start_25), 
+        .start(start_26), 
         .data_out(weight_layer2), 
-        .done(start_26)
+        .done(start_27)
     );
     
     bias_loader_layer2 b9(
         .clk(clk_100MHz), 
-        .start(start_26),
+        .start(start_27),
         .data_out(bias_layer2), 
-        .done(start_27)
+        .done(start_28)
     );
     
     fc_layer2_flattened m9(
         .clk(clk_100MHz),
-        .start(start_27), 
+        .start(start_28), 
         .in_vector_flat(output_layer1), 
         .weights_flat(weight_layer2), 
         .biases_flat(bias_layer2), 
         .out_vector_flat(output_layer2), 
-        .done(start_28)
+        .done(start_29)
     );
     
     // Main FSM
@@ -364,6 +365,7 @@ module controller(
                     allow_next <= 0;
                     // Check if all bytes received
                     if(input_counter == 255) begin
+                        start_1 <= 1'b1;
                         state <= OUTPUT_LAYER_1;
                         input_counter <= 0;
                     end
@@ -375,13 +377,14 @@ module controller(
             
             OUTPUT_LAYER_1: begin
                 if (start_25) begin
+                    start_26 <= 1'b1;
                     state <= OUTPUT_LAYER_2; 
                     output_layer1 <= {output_layer1_8,output_layer1_7,output_layer1_6,output_layer1_5,output_layer1_4,output_layer1_3,output_layer1_2,output_layer1_1};
                 end
             end
             
             OUTPUT_LAYER_2: begin
-                if (start_28) begin
+                if (start_29) begin
                     state <= FINAL_OUTPUT; 
                     output_buffer <= output_layer2;
                 end
