@@ -2,7 +2,7 @@
 
 module BRAM_tb();
 reg clk, en, wen, ren;
-reg [17:0] addr;
+reg [14:0] addr;
 reg [7:0] din;
 wire [7:0] dout;
 
