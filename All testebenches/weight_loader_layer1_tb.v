@@ -3,7 +3,7 @@
 module weight_loader_layer1_tb;
 
     // Parameters (match DUT)
-    parameter IN_SIZE = 3;
+    parameter IN_SIZE = 2;
     parameter OUT_SIZE = 2;
     parameter W = 8;
     parameter TOTAL_WEIGHTS = IN_SIZE * OUT_SIZE;
