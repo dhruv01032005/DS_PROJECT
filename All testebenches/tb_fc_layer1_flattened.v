@@ -69,7 +69,7 @@ module tb_fc_layer1_flattened;
         end
         
         for (i = 0; i < OUT_SIZE; i = i + 1) begin 
-                biases_flat[i*W +: W] = -8'sd14 + i*8'sd4;
+                biases_flat[i*W +: W] = -8'sd36 + i*8'sd4;
         end
     
             #10;
