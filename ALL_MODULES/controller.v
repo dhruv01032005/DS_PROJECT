@@ -82,7 +82,7 @@ module controller(
         flush_ctrl <= 0;
         tx_enable <= 0;
         input_buffer <= 512'b0;
-        output_buffer <= 80'b0;
+        output_buffer <= 80'b1;
         input_counter <= 0;
         output_counter <= 0;
         allow_next <= 0;
