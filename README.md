@@ -12,7 +12,7 @@ Prof. Joycee Mekie
 ## INTRODUCTION -
 In this project we are implementing fully connected neural network on FPGA for MNIST Dataset by training process of MNIST training dataset using python and then using the weights and biases obtained through it in the prediction of the test dataset by doing calculations on FPGA.
 
-## Learning Outcomes -
+## LEARNING OUTCOMES -
 1. Integration of UART for transmitting and recieving data.
 2. Loading the baises and retrieving them.
 3. Parallelized matrix multiplication on FPGA.
