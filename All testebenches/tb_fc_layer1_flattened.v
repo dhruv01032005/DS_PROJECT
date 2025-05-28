@@ -45,10 +45,10 @@ module tb_fc_layer1_flattened;
     integer i, j;
     initial begin
 //        reset = 1;
-        start = 0;
-        #15;
-//        reset = 0;
-        #10;
+//         start = 0;
+//         #15;
+// //        reset = 0;
+//         #10;
         
         // sample input vector
         for (i = 0; i < IN_SIZE; i = i + 1) begin
@@ -72,19 +72,19 @@ module tb_fc_layer1_flattened;
                 biases_flat[i*W +: W] = -8'sd36 + i*8'sd4;
         end
     
-            #10;
-            start = 1;
-            #10;
+            // #10;
+            // start = 1;
+            // #10;
         start = 0;
-        wait (done == 1);
-        #10;
+        // wait (done == 1);
+        // #10;
         
         // print statements
-        $display("Output vector:");
-        for (i = 0; i < OUT_SIZE; i = i + 1) begin
-            $display("Neuron %0d: %d", i, $signed(out_vector_flat[i*W +: W]));
-        end
+        // $display("Output vector:");
+        // for (i = 0; i < OUT_SIZE; i = i + 1) begin
+        //     $display("Neuron %0d: %d", i, $signed(out_vector_flat[i*W +: W]));
+        // end
         
-        $finish;
+        // $finish;
     end
 endmodule
